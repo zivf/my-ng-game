@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, HostListener, Input} from "@angular/core";
 import {GameService} from "./game-service";
 
 @Component({
@@ -12,8 +12,7 @@ import {GameService} from "./game-service";
   ],
   providers: [GameService],
   template: `
-    <table width="100%" tabindex="1" [style.background-color]="getBackground()" 
-           (keydown)="keyDown($event)" (focus)="gameFocused()" (blur)="gameUnfocused()">
+    <table width="100%" tabindex="1">
         <tr>
             <td align="center">Level: {{gameLevel}}</td>
             <td>Score: {{currentScore}}</td>
@@ -39,6 +38,7 @@ export class GameComponent {
         return this.gameService.movesCount;
     }
 
+    @HostListener('window:keydown', ['$event'])
     keyDown(evt) {
         if (evt.keyCode === 39) {
             this.gameService.moveRight();
@@ -77,19 +77,5 @@ export class GameComponent {
 
     get gameLevel() {
         return this.gameService.level;
-    }
-
-    backgroundColor: string = "white";
-
-    gameFocused() {
-        this.backgroundColor = "silver";
-    }
-
-    gameUnfocused() {
-        this.backgroundColor = "white";
-    }
-
-    getBackground() {
-        return this.backgroundColor;
     }
 }
