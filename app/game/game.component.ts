@@ -38,7 +38,7 @@ export class GameComponent {
         return this.gameService.movesCount;
     }
 
-    @HostListener('window:keydown', ['$event'])
+    @HostListener('document:keydown', ['$event'])
     keyDown(evt) {
         if (evt.keyCode === 39) {
             this.gameService.moveRight();
